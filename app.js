@@ -64,6 +64,9 @@ app.get('/chatrooms/:roomId/messages', (req, res) => {
     });
 });
 
+// Serve static files from the 'static' directory
+app.use(express.static('static'));
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
