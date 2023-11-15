@@ -33,7 +33,34 @@ db.serialize(() => {
 
 // Export functions to interact with the database
 module.exports = {
-    // Add functions here
+    createChatRoom: function(name, callback) {
+        const sql = `INSERT INTO chatrooms (name) VALUES (?)`;
+        db.run(sql, [name], function(err) {
+            callback(err, { chatroomId: this.lastID });
+        });
+    },
+    addUser: function(name, callback) {
+        const sql = `INSERT INTO users (name) VALUES (?)`;
+        db.run(sql, [name], function(err) {
+            callback(err, { userId: this.lastID });
+        });
+    },
+    sendMessage: function(chatroomId, userId, message, callback) {
+        const sql = `INSERT INTO messages (chatroom_id, user_id, message) VALUES (?, ?, ?)`;
+        db.run(sql, [chatroomId, userId, message], function(err) {
+            callback(err);
+        });
+    },
+    getMessagesSince: function(chatroomId, timestamp, callback) {
+        const sql = `SELECT users.name as nickname, messages.timestamp, messages.message
+                     FROM messages
+                     JOIN users ON messages.user_id = users.id
+                     WHERE messages.chatroom_id = ? AND messages.timestamp > ?
+                     ORDER BY messages.timestamp ASC`;
+        db.all(sql, [chatroomId, new Date(timestamp).toISOString()], function(err, rows) {
+            callback(err, rows);
+        });
+    }
 };
 
 // Close the database connection when the application is terminated
