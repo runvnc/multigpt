@@ -6,8 +6,7 @@ const port = 3000;
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-// Placeholder for database module
-// const db = require('./database');
+const db = require('./database');
 
 // API endpoint to create a chat room
 app.post('/chatrooms', (req, res) => {
