@@ -22,11 +22,11 @@ db.serialize(() => {
 
     db.run(`CREATE TABLE IF NOT EXISTS messages (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        chatroom_id INTEGER NOT NULL,
+        chatroom_id TEXT NOT NULL,
         user_id INTEGER NOT NULL,
         message TEXT NOT NULL,
         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (chatroom_id) REFERENCES chatrooms (id),
+        FOREIGN KEY (chatroom_id) REFERENCES chatrooms (id) ON DELETE CASCADE,
         FOREIGN KEY (user_id) REFERENCES users (id)
     )`);
 });
