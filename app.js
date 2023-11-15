@@ -21,7 +21,8 @@ app.use((req, res, next) => {
 // API endpoint to create a chat room
 app.get('/chatrooms', (req, res) => {
     const { name } = req.query;
-    db.createChatRoom(name, (err, result) => {
+    const uuid = require('uuid');
+    db.createChatRoom(uuid.v4(), name, (err, result) => {
         if (err) {
             res.status(500).send({ message: 'Error creating chat room', error: err.message });
         } else {

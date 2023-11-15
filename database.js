@@ -33,9 +33,9 @@ db.serialize(() => {
 
 // Export functions to interact with the database
 module.exports = {
-    createChatRoom: function(name, callback) {
-        const sql = `INSERT INTO chatrooms (name) VALUES (?)`;
-        db.run(sql, [name], function(err) {
+    createChatRoom: function(id, name, callback) {
+        const sql = `INSERT INTO chatrooms (id, name) VALUES (?, ?)`;
+        db.run(sql, [id, name], function(err) {
             callback(err, { chatroomId: this.lastID });
         });
     },
