@@ -8,6 +8,16 @@ app.use(bodyParser.json());
 
 const db = require('./database');
 
+// Logging middleware
+app.use((req, res, next) => {
+    const { method, path, body, params, query } = req;
+    console.log(`Received ${method} request on ${path}`);
+    console.log('Body:', body);
+    console.log('Params:', params);
+    console.log('Query:', query);
+    next();
+});
+
 // API endpoint to create a chat room
 app.post('/chatrooms', (req, res) => {
     const { name } = req.body;
