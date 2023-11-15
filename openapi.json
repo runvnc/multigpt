@@ -67,10 +67,47 @@
         }
       }
     },
-    "/chatrooms/{roomId}/messages": {
+    "/chatrooms/{roomId}/sendmessage": {
       "get": {
-        "operationId": "getMessages",
-        "summary": "Check for new messages since a certain timestamp",
+        "operationId": "sendMessage",
+        "summary": "Send a message to a chat room",
+        "parameters": [
+          {
+            "name": "roomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "nickname",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "message",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Message sent"
+          },
+          "500": {
+            "description": "Error sending message"
+          }
+        }
+      }
+    },
+    "/chatrooms/{roomId}/messages": {
         "parameters": [
           {
             "name": "roomId",
