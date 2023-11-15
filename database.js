@@ -11,7 +11,7 @@ const db = new sqlite3.Database('./chatroom.db', (err) => {
 // Create tables if they do not exist
 db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS chatrooms (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id TEXT PRIMARY KEY,
         name TEXT NOT NULL
     )`);
 
