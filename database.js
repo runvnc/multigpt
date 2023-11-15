@@ -47,7 +47,7 @@ module.exports = {
     },
     sendMessage: function(chatroomId, userId, message, callback) {
         const sql = `INSERT INTO messages (chatroom_id, user_id, message) VALUES (?, ?, ?)`;
-        db.run(sql, [chatroomId, userId, message], function(err) {
+        db.run(sql, [String(chatroomId), userId, message], function(err) {
             callback(err);
         });
     },
@@ -57,7 +57,7 @@ module.exports = {
                      JOIN users ON messages.user_id = users.id
                      WHERE messages.chatroom_id = ? AND messages.timestamp > ?
                      ORDER BY messages.timestamp ASC`;
-        db.all(sql, [chatroomId, new Date(timestamp).toISOString()], function(err, rows) {
+        db.all(sql, [String(chatroomId), new Date(timestamp).toISOString()], function(err, rows) {
             callback(err, rows);
         });
     }

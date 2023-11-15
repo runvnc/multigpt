@@ -33,7 +33,7 @@ app.get('/chatrooms', (req, res) => {
 
 // API endpoint to join a chat room
 app.get('/chatrooms/:roomId/users', (req, res) => {
-    const { roomId } = req.params;
+    const roomId = String(req.params.roomId);
     const { name } = req.body;
     db.joinChatRoom(roomId, name, (err, result) => {
         if (err) {
@@ -46,7 +46,7 @@ app.get('/chatrooms/:roomId/users', (req, res) => {
 
 // API endpoint to send a message to a chat room
 app.get('/chatrooms/:roomId/messages', (req, res) => {
-    const { roomId } = req.params;
+    const roomId = String(req.params.roomId);
     const { userId, message } = req.body;
     db.sendMessage(roomId, userId, message, (err) => {
         if (err) {
