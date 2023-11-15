@@ -19,8 +19,8 @@ app.use((req, res, next) => {
 });
 
 // API endpoint to create a chat room
-app.post('/chatrooms', (req, res) => {
-    const { name } = req.body;
+app.get('/chatrooms', (req, res) => {
+    const { name } = req.query;
     db.createChatRoom(name, (err, result) => {
         if (err) {
             res.status(500).send({ message: 'Error creating chat room', error: err.message });
@@ -31,8 +31,8 @@ app.post('/chatrooms', (req, res) => {
 });
 
 // API endpoint to join a chat room
-app.post('/chatrooms/:roomId/users', (req, res) => {
-    const { name } = req.body;
+app.get('/chatrooms/:roomId/users', (req, res) => {
+    const { name } = req.query;
     db.addUser(name, (err, result) => {
         if (err) {
             res.status(500).send({ message: 'Error adding user', error: err.message });
@@ -43,9 +43,9 @@ app.post('/chatrooms/:roomId/users', (req, res) => {
 });
 
 // API endpoint to send a message to a chat room
-app.post('/chatrooms/:roomId/messages', (req, res) => {
+app.get('/chatrooms/:roomId/sendmessage', (req, res) => {
     const { roomId } = req.params;
-    const { nickname, message } = req.body;
+    const { nickname, message } = req.query;
     db.addUser(nickname, (err, userResult) => {
         if (err) {
             res.status(500).send({ message: 'Error adding user', error: err.message });
