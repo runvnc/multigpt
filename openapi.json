@@ -108,6 +108,9 @@
       }
     },
     "/chatrooms/{roomId}/messages": {
+      "get": {
+        "operationId": "getMessagesAfterTimestamp",
+        "summary": "Retrieve messages after a specific timestamp",
         "parameters": [
           {
             "name": "roomId",
