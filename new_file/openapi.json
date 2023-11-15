@@ -1,0 +1,159 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Chat Room API",
+    "version": "1.0.0",
+    "description": "API for creating chat rooms, adding users, sending and retrieving messages."
+  },
+  "servers": [
+    {
+      "url": "https://multiplayer.padhub.xyz"
+    }
+  ],
+  "paths": {
+    "/chatrooms": {
+      "post": {
+        "operationId": "createChatRoom",
+        "summary": "Create a chat room",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["name"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Chat room created"
+          },
+          "500": {
+            "description": "Error creating chat room"
+          }
+        }
+      }
+    },
+    "/chatrooms/{roomId}/users": {
+      "post": {
+        "operationId": "addUserToChatRoom",
+        "summary": "Join a chat room",
+        "parameters": [
+          {
+            "name": "roomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["name"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Joined chat room"
+          },
+          "500": {
+            "description": "Error adding user"
+          }
+        }
+      }
+    },
+    "/chatrooms/{roomId}/messages": {
+      "post": {
+        "operationId": "sendMessageToChatRoom",
+        "summary": "Send a message to a chat room",
+        "parameters": [
+          {
+            "name": "roomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nickname": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": ["nickname", "message"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Message sent"
+          },
+          "500": {
+            "description": "Error sending message"
+          }
+        }
+      },
+      "get": {
+        "operationId": "getMessagesSince",
+        "summary": "Check for new messages since a certain timestamp",
+        "parameters": [
+          {
+            "name": "roomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "timestamp",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Messages retrieved"
+          },
+          "500": {
+            "description": "Error retrieving messages"
+          }
+        }
+      }
+    }
+  }
+}
